@@ -1,8 +1,8 @@
 ## BBPLOT
 
 
-Include a URL to the GitHub link to where the original R package came from.
-Include a URL to the deployed website that you will do in Part 1E, but it should be something like
+R package came from (https://github.com/bbc/bbplot.git)
+deployed website URL (https://jhu-statprogramming-fall-2023.github.io/biostat777-project3-part1-chuysun/)
 
 ## Modify 
 

@@ -28,7 +28,16 @@ library(forcats)
 library(purrr)
 ```
 
+You must describe what is the question you aim to answer with the data and data analysis.
+This analysis aim to explore the Tornados in United States. 
+
+You must describe and link to where the original data come from that you chose.
+TThe dataset is from tidytuesday(https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-05-16/readme.md#tornados)
+
+The data dictionary is [here](https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-05-16/readme.md#data-dictionary)
+
 ```{r}
+## Load Data
 if (!dir.exists(here("data"))) {
     dir.create(here("data"))
 }
@@ -53,7 +62,6 @@ map(tornados, ~ any(is.na(.)))
 ```
 
 ```{r,fig.width=7}
-
 FL=tornados%>%
   filter(st=="FL")%>%
   group_by(yr)%>%
@@ -63,7 +71,7 @@ FL%>%
   ggplot(aes(x=yr, y=fl_mag_mean))+
   geom_line()+
   labs(title = "Florida average tornados magnitude from 1950-2020",
-       subtitle = "",  x="years", y="average tornados magnitude", caption = "Chuyi Sun")+
+       subtitle = "There is a decreasing trend from 1950 to 2020. The lowest period is around 2000.",  x="years", y="average tornados magnitude", caption = "Chuyi Sun")+
   bbc_style()+
   theme(plot.title=element_text(size = 15))
 
@@ -82,7 +90,7 @@ plot1=state_summary%>%
   geom_point()+
   facet_wrap(~mo, nrow = 6, scales = "free")+ 
   labs(title = "Average tornados magnitude of US states in each months",
-       subtitle = "", x="States", y="average tornados magnitude", caption = "Chuyi Sun")+
+       subtitle = "Except for September, other month trend to have similar average tornados magnitude. Alaska almost never have tornado", x="States", y="average tornados magnitude", caption = "Chuyi Sun")+
   geom_text(aes(label=st),size=2,vjust = -0.5)+
   theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=1, size = 5))
 
@@ -100,10 +108,40 @@ tornados%>%
   summarise(stage_sum=sum(inj))%>%
   ggplot(aes(x=stage, y=stage_sum))+
   geom_bar(stat="identity")+
-  labs(title = "Average tornados magnitude of US states in each months",
-       subtitle = "", x="States", y="average tornados magnitude", caption = "Chuyi Sun")
+  labs(title = "Total injury in tornados in every 24 years",
+       subtitle = "Between 1950-1974, there are lot of injuries. And 2000-2024 has the lowest injuries", x="States", y="average tornados magnitude", caption = "Chuyi Sun")
 
 ```
+
+
+## Functions used 
+
+##### Dplyr  
+
+* mutate
+* group_by
+* filter
+* select
+* case_when
+* summarise
+
+
+##### ggplot2  
+
+* geom_line
+* geom_point
+* geom_bar
+* geom_text
+* facet_wrap
+
+##### purrr 
+
+* map_chr
+* map 
+
+##### bbplot  
+* bbc_style
+* finalise_plot
 
 
 
