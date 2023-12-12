@@ -1,0 +1,110 @@
+---
+title: "Example_analysis"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Example_analysis}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(bbplot)
+```
+
+```{r}
+library(here)
+library(ggplot2)
+library(tidytuesdayR)
+library(dplyr)
+library(lubridate)
+library(forcats)
+library(purrr)
+```
+
+```{r}
+if (!dir.exists(here("data"))) {
+    dir.create(here("data"))
+}
+
+files = c("tornados.rda")
+if (any(!file.exists(here("data", files)))) {
+    tuesdata = tidytuesdayR::tt_load('2023-05-16')
+    tornados = tuesdata$tornados
+    # save the files to rda objects
+    save(tornados, file = here("data", "tornados.rda"), compress = "xz")
+}
+
+load(here("data", "tornados.rda"))
+
+```
+
+```{r}
+## glimpse of data 
+map_chr(.x = tornados, .f = typeof)
+## test NA
+map(tornados, ~ any(is.na(.)))
+```
+
+```{r,fig.width=7}
+
+FL=tornados%>%
+  filter(st=="FL")%>%
+  group_by(yr)%>%
+  select(yr, mag)%>%
+  summarise(fl_mag_mean=mean(mag, na.rm = T))
+FL%>%
+  ggplot(aes(x=yr, y=fl_mag_mean))+
+  geom_line()+
+  labs(title = "Florida average tornados magnitude from 1950-2020",
+       subtitle = "",  x="years", y="average tornados magnitude", caption = "Chuyi Sun")+
+  bbc_style()+
+  theme(plot.title=element_text(size = 15))
+
+```
+
+```{r, fig.height=12, fig.width=10}
+state_summary=tornados%>%
+  mutate(tz=as.factor(tz))%>%
+  mutate(st=as.factor(st))%>%
+  select(-c("slat", "slon", "elat", "elon"))%>%
+  group_by(st,mo)%>%
+  arrange(mag)%>%
+  summarise(state_mean=mean(mag, na.rm = T),.groups = "drop")
+plot1=state_summary%>%
+  ggplot(aes(x=st, y=state_mean))+
+  geom_point()+
+  facet_wrap(~mo, nrow = 6, scales = "free")+ 
+  labs(title = "Average tornados magnitude of US states in each months",
+       subtitle = "", x="States", y="average tornados magnitude", caption = "Chuyi Sun")+
+  geom_text(aes(label=st),size=2,vjust = -0.5)+
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=1, size = 5))
+
+finalise_plot(plot_name = plot1,source = "Source: Example_analysis",save_filepath = "state_summary.png")
+```
+
+
+```{r}
+## 1950-2022
+## 1950-1974, 1975-1999, 2000-2024
+tornados%>%
+  mutate(stage=case_when(yr>1949 & yr<1975 ~ "1950-1974", yr>1974 & yr<2000 ~ "1975-1999",yr>1999 & yr<2025 ~ "2000-2024"))%>%
+  select(stage, inj)%>%
+  group_by(stage)%>%
+  summarise(stage_sum=sum(inj))%>%
+  ggplot(aes(x=stage, y=stage_sum))+
+  geom_bar(stat="identity")+
+  labs(title = "Average tornados magnitude of US states in each months",
+       subtitle = "", x="States", y="average tornados magnitude", caption = "Chuyi Sun")
+
+```
+
+
+
+

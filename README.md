@@ -1,5 +1,21 @@
 ## BBPLOT
 
+
+Include a URL to the GitHub link to where the original R package came from.
+Include a URL to the deployed website that you will do in Part 1E, but it should be something like
+
+## Modify 
+
+Change the background color
+Change the theme
+Change the font
+Change the navigation bar
+Change the code background to red 
+
+### Author 
+
+
+## Original README
 This repo contains the functions of the `bbplot` package, which once installed locally, provides helpful functions for creating and exporting  graphics made in ggplot in the style used by the BBC News data team.
 
 ![Example of graphics created using the bbplot package](chart_examples/bbplot_example_plots.png)
