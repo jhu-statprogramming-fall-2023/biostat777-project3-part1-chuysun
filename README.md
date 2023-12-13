@@ -6,14 +6,22 @@ deployed website URL (https://jhu-statprogramming-fall-2023.github.io/biostat777
 
 ## Modify 
 
-Change the background color
-Change the theme
-Change the font
-Change the navigation bar
-Change the code background to red 
+- Change the background color
+
+- Change the theme
+
+- Change the font
+
+- Change the navigation bar
+
+- Change the code background 
 
 ### Author 
 
+The author of this website and example analysis Chuyi Sun.
+
+
+The authors of the package are Nassos Stylianou, Clara Guibourg, Will Dahlgreen, Robert Cuffe, Tom Calver, and Ransome Mpini. 
 
 ## Original README
 This repo contains the functions of the `bbplot` package, which once installed locally, provides helpful functions for creating and exporting  graphics made in ggplot in the style used by the BBC News data team.

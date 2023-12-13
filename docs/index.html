@@ -39,7 +39,12 @@
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto">
+      <ul class="navbar-nav me-auto"></ul>
+<form class="form-inline my-2 my-lg-0" role="search">
+        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="search.json" id="search-input" placeholder="Search for" autocomplete="off">
+</form>
+
+      <ul class="navbar-nav">
 <li class="nav-item">
   <a class="nav-link" href="reference/index.html">Reference</a>
 </li>
@@ -50,11 +55,6 @@
   </div>
 </li>
       </ul>
-<form class="form-inline my-2 my-lg-0" role="search">
-        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="search.json" id="search-input" placeholder="Search for" autocomplete="off">
-</form>
-
-      <ul class="navbar-nav"></ul>
 </div>
 
     
@@ -64,23 +64,27 @@
   <main id="main" class="col-md-9"><div class="section level2">
 <h2 id="bbplot">BBPLOT<a class="anchor" aria-label="anchor" href="#bbplot"></a>
 </h2>
-<p>Include a URL to the GitHub link to where the original R package came from. Include a URL to the deployed website that you will do in Part 1E, but it should be something like</p>
+<p>R package came from (<a href="https://github.com/bbc/bbplot.git" class="external-link uri">https://github.com/bbc/bbplot.git</a>) deployed website URL (<a href="https://jhu-statprogramming-fall-2023.github.io/biostat777-project3-part1-chuysun/" class="external-link uri">https://jhu-statprogramming-fall-2023.github.io/biostat777-project3-part1-chuysun/</a>)</p>
 </div>
 <div class="section level2">
 <h2 id="modify">Modify<a class="anchor" aria-label="anchor" href="#modify"></a>
 </h2>
-<p>Change the background color Change the theme Change the font Change the navigation bar Change the code background to red</p>
-<div class="section level3">
-<h3 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a>
-</h3>
-</div>
+<ul>
+<li><p>Change the background color</p></li>
+<li><p>Change the theme</p></li>
+<li><p>Change the font</p></li>
+<li><p>Change the navigation bar</p></li>
+<li><p>Change the code background</p></li>
+</ul>
+<div class="section level3"><h3 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a>
+</h3></div>
 </div>
 <div class="section level2">
 <h2 id="original-readme">Original README<a class="anchor" aria-label="anchor" href="#original-readme"></a>
 </h2>
 <p>This repo contains the functions of the <code>bbplot</code> package, which once installed locally, provides helpful functions for creating and exporting graphics made in ggplot in the style used by the BBC News data team.</p>
-<div class="float">
-<img src="chart_examples/bbplot_example_plots.png" alt="Example of graphics created using the bbplot package"><div class="figcaption">Example of graphics created using the bbplot package</div>
+<div class="figure">
+<img src="chart_examples/bbplot_example_plots.png" alt=""><p class="caption">Example of graphics created using the bbplot package</p>
 </div>
 </div>
 <div class="section level2">
@@ -101,10 +105,8 @@
 <h3 id="bbc_style">
 <code>bbc_style()</code><a class="anchor" aria-label="anchor" href="#bbc_style"></a>
 </h3>
-<ol style="list-style-type: decimal">
-<li>
-<code><a href="reference/bbc_style.html">bbc_style()</a></code>: has no arguments and is added to the ggplot chain after you have created a plot. What it does is generally makes text size, font and colour, axis lines, axis text and many other standard chart components into BBC style, which has been formulated together with the Visual Journalism design team.</li>
-</ol>
+<ol style="list-style-type: decimal"><li>
+<code><a href="reference/bbc_style.html">bbc_style()</a></code>: has no arguments and is added to the ggplot chain after you have created a plot. What it does is generally makes text size, font and colour, axis lines, axis text and many other standard chart components into BBC style, which has been formulated together with the Visual Journalism design team.</li></ol>
 <p>The function is pretty basic and does not change or adapt based on the type of chart you are making, so in some cases you will need to make additional <code>theme</code> arguments in your ggplot chain if you want to make any additions or changes to the style, for example to add or remove gridlines etc. Also note that colours for lines in the case of a line chart or bars for a bar chart, do not come out of the box from the <code>bbc_style</code> function, but need to be explicitly set in your other standard <code>ggplot</code> chart functions.</p>
 <p>Example of how it is used in a standard workflow:</p>
 <pre><code><span><span class="va">line</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">line_df</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">year</span>, y <span class="op">=</span> <span class="va">lifeExp</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -116,10 +118,8 @@
 <h3 id="finalise_plot">
 <code>finalise_plot</code><a class="anchor" aria-label="anchor" href="#finalise_plot"></a>
 </h3>
-<ol start="2" style="list-style-type: decimal">
-<li>
-<code>finalise_plot</code>: will save out your plot with the correct guidelines for publication for a BBC News graphic. It is made up of functions that will left align your title, subtitle and source, add the BBC blocks at the bottom right and save it to your specified location. The function has six arguments, three of which need to be explicitly set and three that are defaults unless you overwrite them.</li>
-</ol>
+<ol start="2" style="list-style-type: decimal"><li>
+<code>finalise_plot</code>: will save out your plot with the correct guidelines for publication for a BBC News graphic. It is made up of functions that will left align your title, subtitle and source, add the BBC blocks at the bottom right and save it to your specified location. The function has six arguments, three of which need to be explicitly set and three that are defaults unless you overwrite them.</li></ol>
 <p>Here are the function arguments: <code>finalise_plot(plot_name, source_name, save_filepath, width_pixels, height_pixels, logo_image_path)</code></p>
 <ul>
 <li>

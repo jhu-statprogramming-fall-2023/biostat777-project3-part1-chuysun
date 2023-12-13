@@ -4,14 +4,14 @@ template:
   bootswatch: materia
   bslib:
     bg: "#707509"
-    fg: "#bbc2b8"
-    primary: "#8fb0e3"
-    code-bg: "#f70505"
+    fg: "#eaeda4"
+    primary: "#f3f5c6"
+    code-bg: "#444529"
     base_font: {google: "Kalnia"}
     heading_font: {google: "Afacad"}
     code_font: {google: "Playfair Display"}
-  navbar:
-    structure:
-      left:  [reference, articles]
-      right: [search]
+navbar:
+  structure:
+    left:  [search]
+    right: [reference, articles]
 

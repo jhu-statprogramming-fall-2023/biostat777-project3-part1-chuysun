@@ -28,16 +28,18 @@ library(forcats)
 library(purrr)
 ```
 
-You must describe what is the question you aim to answer with the data and data analysis.
-This analysis aim to explore the Tornados in United States. 
+This analysis aims to explore the Tornados in United States, especially look at the tread of injuries and magnitude. 
 
 You must describe and link to where the original data come from that you chose.
-TThe dataset is from tidytuesday(https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-05-16/readme.md#tornados)
+The dataset is from tidytuesday.[here](https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-05-16/readme.md#tornados)
+
 
 The data dictionary is [here](https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-05-16/readme.md#data-dictionary)
 
-```{r}
+
 ## Load Data
+
+```{r}
 if (!dir.exists(here("data"))) {
     dir.create(here("data"))
 }
@@ -54,19 +56,27 @@ load(here("data", "tornados.rda"))
 
 ```
 
+## Glimpse of data   
+
 ```{r}
-## glimpse of data 
 map_chr(.x = tornados, .f = typeof)
 ## test NA
 map(tornados, ~ any(is.na(.)))
 ```
 
-```{r,fig.width=7}
+## Data Wrangling    
+```{r}
 FL=tornados%>%
   filter(st=="FL")%>%
   group_by(yr)%>%
   select(yr, mag)%>%
   summarise(fl_mag_mean=mean(mag, na.rm = T))
+
+```
+
+## Plot 1  
+
+```{r,fig.width=7}
 FL%>%
   ggplot(aes(x=yr, y=fl_mag_mean))+
   geom_line()+
@@ -77,6 +87,7 @@ FL%>%
 
 ```
 
+## Plot 2 
 ```{r, fig.height=12, fig.width=10}
 state_summary=tornados%>%
   mutate(tz=as.factor(tz))%>%
@@ -90,17 +101,16 @@ plot1=state_summary%>%
   geom_point()+
   facet_wrap(~mo, nrow = 6, scales = "free")+ 
   labs(title = "Average tornados magnitude of US states in each months",
-       subtitle = "Except for September, other month trend to have similar average tornados magnitude. Alaska almost never have tornado", x="States", y="average tornados magnitude", caption = "Chuyi Sun")+
+       subtitle = "Except for September, other months tend to have similar average tornado magnitude. Alaska almost never has a tornado.", x="States", y="average tornados magnitude", caption = "Chuyi Sun")+
   geom_text(aes(label=st),size=2,vjust = -0.5)+
   theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=1, size = 5))
 
 finalise_plot(plot_name = plot1,source = "Source: Example_analysis",save_filepath = "state_summary.png")
 ```
 
+## Plot 3  
 
 ```{r}
-## 1950-2022
-## 1950-1974, 1975-1999, 2000-2024
 tornados%>%
   mutate(stage=case_when(yr>1949 & yr<1975 ~ "1950-1974", yr>1974 & yr<2000 ~ "1975-1999",yr>1999 & yr<2025 ~ "2000-2024"))%>%
   select(stage, inj)%>%
@@ -108,11 +118,14 @@ tornados%>%
   summarise(stage_sum=sum(inj))%>%
   ggplot(aes(x=stage, y=stage_sum))+
   geom_bar(stat="identity")+
-  labs(title = "Total injury in tornados in every 24 years",
-       subtitle = "Between 1950-1974, there are lot of injuries. And 2000-2024 has the lowest injuries", x="States", y="average tornados magnitude", caption = "Chuyi Sun")
+  labs(title = "Total injuries in tornados in every 24 years",
+       subtitle = "Between 1950-1974, there were a lot of injuries, and 2000-2024 had the lowest injuries. There is a decreasing trend over time.", x="States", y="average tornados magnitude", caption = "Chuyi Sun")
 
 ```
 
+## Summary  
+
+We can see a decreasing trend in the magnitude of the tornados, therefore the trend of injuries is also decreasing. Besides, the reduction of injuries might be due to the development of prevention. Looking at the spread of the tornado in each month, except for September, other months tend to have similar average tornado magnitude.
 
 ## Functions used 
 
