@@ -76,14 +76,15 @@ FL=tornados%>%
 
 ## Plot 1  
 
-```{r,fig.width=7}
+```{r,fig.width=10}
 FL%>%
   ggplot(aes(x=yr, y=fl_mag_mean))+
   geom_line()+
   labs(title = "Florida average tornados magnitude from 1950-2020",
-       subtitle = "There is a decreasing trend from 1950 to 2020. The lowest period is around 2000.",  x="years", y="average tornados magnitude", caption = "Chuyi Sun")+
+       subtitle = "There is a decreasing trend from 1950 to 2020. 
+The lowest period is around 2000.",  x="years", y="average tornados magnitude", caption = "Chuyi Sun")+
   bbc_style()+
-  theme(plot.title=element_text(size = 15))
+  theme(plot.title=element_text(size = 15), plot.subtitle = element_text(size = 9))
 
 ```
 
@@ -101,7 +102,8 @@ plot1=state_summary%>%
   geom_point()+
   facet_wrap(~mo, nrow = 6, scales = "free")+ 
   labs(title = "Average tornados magnitude of US states in each months",
-       subtitle = "Except for September, other months tend to have similar average tornado magnitude. Alaska almost never has a tornado.", x="States", y="average tornados magnitude", caption = "Chuyi Sun")+
+       subtitle = "Except for September, other months tend to have similar 
+average tornado magnitude. Alaska almost never has a tornado.", x="States", y="average tornados magnitude", caption = "Chuyi Sun")+
   geom_text(aes(label=st),size=2,vjust = -0.5)+
   theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=1, size = 5))
 
@@ -110,7 +112,7 @@ finalise_plot(plot_name = plot1,source = "Source: Example_analysis",save_filepat
 
 ## Plot 3  
 
-```{r}
+```{r,fig.width=10}
 tornados%>%
   mutate(stage=case_when(yr>1949 & yr<1975 ~ "1950-1974", yr>1974 & yr<2000 ~ "1975-1999",yr>1999 & yr<2025 ~ "2000-2024"))%>%
   select(stage, inj)%>%
@@ -119,7 +121,8 @@ tornados%>%
   ggplot(aes(x=stage, y=stage_sum))+
   geom_bar(stat="identity")+
   labs(title = "Total injuries in tornados in every 24 years",
-       subtitle = "Between 1950-1974, there were a lot of injuries, and 2000-2024 had the lowest injuries. There is a decreasing trend over time.", x="States", y="average tornados magnitude", caption = "Chuyi Sun")
+       subtitle = "Between 1950-1974, there were a lot of injuries, and 2000-2024 
+had the lowest injuries. There is a decreasing trend over time.", x="States", y="average tornados magnitude", caption = "Chuyi Sun")
 
 ```
 
