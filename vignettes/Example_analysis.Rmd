@@ -121,8 +121,8 @@ tornados%>%
   ggplot(aes(x=stage, y=stage_sum))+
   geom_bar(stat="identity")+
   labs(title = "Total injuries in tornados in every 24 years",
-       subtitle = "Between 1950-1974, there were a lot of injuries, and 2000-2024 
-had the lowest injuries. There is a decreasing trend over time.", x="States", y="average tornados magnitude", caption = "Chuyi Sun")
+       subtitle = "Between 1950-1974, there were a lot of injuries, 
+and 2000-2024 had the lowest injuries. There is a decreasing trend over time.", x="States", y="average tornados magnitude", caption = "Chuyi Sun")
 
 ```
 
